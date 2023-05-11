@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../lib/axios'
 
 export default {
   setup() {
@@ -78,6 +78,7 @@ export default {
         }
 
         window.sessionStorage.setItem('token', result.data.token)
+        axios.defaults.headers.common.Authorization = `Bearer ${result.data.token}`
 
         this.$router.push('/list')
         // if (this.user === 'user1' && this.pass === '1234') {

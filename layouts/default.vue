@@ -11,6 +11,8 @@
   </div>
 </template>
 <script>
+import axios from '../lib/axios'
+
 export default {
   async mountedBak() {
     console.log('created')
@@ -38,6 +40,7 @@ export default {
   methods: {
     logout() {
       sessionStorage.removeItem('token')
+      delete axios.defaults.headers.common.Authorization
       this.$router.push('/login')
     },
   },

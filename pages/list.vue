@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../lib/axios'
 
 export default {
   data() {
@@ -82,7 +82,14 @@ export default {
 
   methods: {
     async listStudent() {
+      console.log('axios.somsak=', axios.somsak)
       try {
+        // let token = sessionStorage.getItem('token')
+        // let opt = {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // }
         let result = await axios.get('/api/students')
         this.students = result.data.students ?? []
       } catch (e) {

@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  async mounted() {
+  async mountedBak() {
     console.log('created')
     let token = sessionStorage.getItem('token')
     if (!token) {

@@ -1,11 +1,9 @@
 <template>
   <h1>LIST PAGE {{ name }}</h1>
   <hr>
-  <ul>
-    <li v-for="(item, key) in items" :key="key">
-      {{ key }}: {{ item }}
-    </li>
-  </ul>
+  <button ref="listBtn" @click="listStudent">
+    LIST STUDENT
+  </button>
   <button @click="addStudent">
     ADD STUDENT
   </button>
@@ -24,7 +22,7 @@
         <td>{{ idx + 1 }}</td>
         <td>{{ student.id }}</td>
         <td>{{ student.code }}</td>
-        <td>{{ student.name.toUpperCase() }}</td>
+        <td>{{ student.fullname.toUpperCase() }}</td>
         <td>
           <button @click="editStudent(student)">
             EDIT
@@ -39,18 +37,19 @@
 </template>
 
 <script>
-// OPTION API
+import axios from 'axios'
 
 export default {
   data() {
     let students = []
-    for (let i = 1; i <= 10; i++) {
-      students.push({
-        id: 100 + i,
-        code: String(i).padStart(4, '0'),
-        name: `Name ${i}`,
-      })
-    }
+    // for (let i = 1; i <= 10; i++) {
+    //   students.push({
+    //     id: 100 + i,
+    //     code: String(i).padStart(4, '0'),
+    //     fullname: `Name ${i}`,
+    //     dept: 'IT',
+    //   })
+    // }
 
     let items = {
       aaa: '0001',
@@ -74,7 +73,22 @@ export default {
     },
   },
 
+  async mounted() {
+    console.log('mounted')
+    await this.listStudent()
+
+    // this.$refs.listBtn.focus()
+  },
+
   methods: {
+    async listStudent() {
+      try {
+        let result = await axios.get('/api/students')
+        this.students = result.data.students ?? []
+      } catch (e) {
+        console.log('error', e)
+      }
+    }, // listStudent
     addStudent() {
       let id = 100 + this.students.length + 1
       this.students.push({
